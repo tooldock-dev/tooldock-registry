@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tooldock.github.io/tooldock-registry/schema/index.schema.json",
+  "title": "ToolDock 擴充索引：index.json",
+  "description": "由 scripts/build-index.js 產生、ToolDock 商店讀取的靜態索引。網址可以是絕對網址，也可以相對於 index.json 本身（離線鏡像用）。",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "extensions"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "name": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "repo", "publisher", "publicKey", "verified", "latest"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]{0,62}$" },
+          "repo": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+          "publisher": { "type": "string" },
+          "publicKey": { "type": "string" },
+          "verified": { "type": "boolean" },
+          "latest": {
+            "type": "object",
+            "required": ["version", "tbxUrl", "sha256Url", "sigUrl", "sha256", "publishedAt", "engine", "displayName"],
+            "properties": {
+              "version": { "type": "string", "description": "Release tag 去掉開頭的 v" },
+              "tbxUrl": { "type": "string", "description": "<id>-<version>.tbx 的下載網址" },
+              "sha256Url": { "type": "string", "description": "<id>-<version>.tbx.sha256 的下載網址" },
+              "sigUrl": { "type": "string", "description": "<id>-<version>.tbx.sig 的下載網址" },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "建立索引時驗證過的 .tbx SHA-256；安裝時以此值為準" },
+              "publishedAt": { "type": "string", "format": "date-time" },
+              "engine": { "type": "string", "description": "套件 tooldock.engine，例如 >=1.0.0" },
+              "displayName": { "type": "string" },
+              "description": { "type": "string" },
+              "icon": { "type": ["string", "null"], "description": "emoji，或由套件內圖示轉成的 data:image/... URI（32 KB 以內）" },
+              "size": { "type": "integer", "description": ".tbx 位元組數" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

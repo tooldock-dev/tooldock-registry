@@ -1,0 +1,98 @@
+# 重建 index.json 並發佈到 GitHub Pages。
+#
+# 為什麼選 GitHub Pages 而不是 commit 回 repo：
+# - index.json 是「建置產物」：每小時重建一次，若 commit 回 repo 會產生大量機器人 commit，
+#   淹沒真正需要審核的 extensions.json 變更，也讓 git 歷史失去稽核價值。
+# - commit 回 repo 需要給 workflow contents: write 權限，且 push 會再觸發 push 事件，容易形成迴圈；
+#   Pages 部署只需要 pages: write + id-token: write，GITHUB_TOKEN 對 repo 內容維持唯讀。
+# - Pages 走 CDN、網址固定（https://<owner>.github.io/<repo>/index.json），適合給 ToolDock 當預設來源。
+# 代價：歷史版本的 index.json 不留在 git；需要時看 Actions 的 artifact 或 job summary。
+# 為了不讓暫時性的 API 錯誤讓擴充從商店消失，建置時會讀取目前線上的 index.json（--previous）做沿用。
+
+name: 建立索引
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - extensions.json
+      - scripts/**
+      - schema/**
+      - .github/workflows/build-index.yml
+  pull_request:
+    paths:
+      - extensions.json
+      - scripts/**
+      - schema/**
+  schedule:
+    - cron: '17 * * * *' # 每小時（擴充發佈新版後最晚約一小時進入索引）
+  workflow_dispatch:
+  repository_dispatch:
+    # 擴充 repo 的發佈流程可以呼叫：
+    # gh api repos/<owner>/<registry>/dispatches -f event_type=extension-released
+    types: [extension-released]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-index-${{ github.event_name == 'pull_request' && github.ref || 'main' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: 檢查上架 PR
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 檢查 extensions.json 格式與公鑰
+        run: node scripts/validate.js
+      - name: 試建索引（不發佈；結果見 job summary）
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/build-index.js --out dist/index.json
+
+  build:
+    name: 建立 index.json
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: 檢查 extensions.json
+        run: node scripts/validate.js
+      - name: 建立索引
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node scripts/build-index.js \
+            --out dist/index.json \
+            --previous "${{ steps.pages.outputs.base_url }}/index.json" \
+            --name "ToolDock 擴充索引"
+          cp -r schema dist/schema
+          touch dist/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: 發佈到 GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}index.json
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

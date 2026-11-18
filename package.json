@@ -1,0 +1,13 @@
+{
+  "name": "tooldock-registry",
+  "private": true,
+  "description": "ToolDock 擴充索引：人工審核的擴充清單，由 GitHub Actions 讀取各擴充 repo 的 Release 產生 index.json。",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.js",
+    "build": "node scripts/build-index.js --out dist/index.json"
+  }
+}

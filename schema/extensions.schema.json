@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tooldock.github.io/tooldock-registry/schema/extensions.schema.json",
+  "title": "ToolDock 擴充索引：收錄清單（extensions.json）",
+  "description": "人工審核後收錄的擴充。每一筆只登記身分與信任來源（repo 與公鑰），版本資訊由 build-index.js 從 GitHub Release 讀取。",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "repo", "publisher", "publicKey", "verified"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "擴充 id，必須與套件 package.json 的 tooldock.id 相同；全索引唯一。",
+        "pattern": "^[a-z0-9][a-z0-9.-]{0,62}$"
+      },
+      "repo": {
+        "type": "string",
+        "description": "發佈 Release 的 GitHub repo，格式 owner/name。",
+        "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+      },
+      "publisher": {
+        "type": "string",
+        "description": "顯示給使用者的發佈者名稱。",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "publicKey": {
+        "type": "string",
+        "description": "Ed25519 公鑰：SPKI DER 的 base64（`tooldock-ext keygen` 產生）。這是安裝時唯一信任的金鑰。",
+        "pattern": "^[A-Za-z0-9+/]+={0,2}$",
+        "minLength": 40,
+        "maxLength": 200
+      },
+      "verified": {
+        "type": "boolean",
+        "description": "索引維護者是否已確認發佈者身分（例如 repo 擁有者與 publisher 名稱相符的組織）。不代表程式碼經過安全稽核。"
+      }
+    }
+  }
+}
