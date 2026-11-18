@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tooldock.github.io/tooldock-registry/schema/extensions.schema.json",
+  "$id": "https://tooldock-dev.github.io/tooldock-registry/schema/extensions.schema.json",
   "title": "ToolDock 擴充索引：收錄清單（extensions.json）",
   "description": "人工審核後收錄的擴充。每一筆只登記身分與信任來源（repo 與公鑰），版本資訊由 build-index.js 從 GitHub Release 讀取。",
   "type": "array",

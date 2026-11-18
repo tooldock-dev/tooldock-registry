@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tooldock.github.io/tooldock-registry/schema/index.schema.json",
+  "$id": "https://tooldock-dev.github.io/tooldock-registry/schema/index.schema.json",
   "title": "ToolDock 擴充索引：index.json",
   "description": "由 scripts/build-index.js 產生、ToolDock 商店讀取的靜態索引。網址可以是絕對網址，也可以相對於 index.json 本身（離線鏡像用）。",
   "type": "object",
