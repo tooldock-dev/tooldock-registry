@@ -119,7 +119,25 @@ async function verifyRelease(entry, release, assets, key) {
     description: td.description || pkg.description || '',
     icon: iconFrom(zip, base, td.icon),
     size: tbx.length,
+    ...exchangeOf(entry.id, td),
   };
+}
+
+/**
+ * 資料交換（ToolDock 1.4.0 起）：收錄可接收的格式與定義的格式，讓商店能「到商店尋找」可接收某格式的擴充。
+ * 規則與平台載入 manifest 時相同：自訂格式必須以擴充 id 開頭、不能使用 tooldock.*。
+ */
+const TYPE_RE = /^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+$/;
+function exchangeOf(id, td) {
+  const ex = (td.contributes && td.contributes.exchange) || {};
+  const imports = [...new Set((Array.isArray(ex.imports) ? ex.imports : [])
+    .filter((im) => im && TYPE_RE.test(im.type || '') && im.handler && im.title)
+    .map((im) => im.type))];
+  const formats = (Array.isArray(ex.formats) ? ex.formats : [])
+    .filter((f) => f && TYPE_RE.test(f.type || '') && f.type.startsWith(`${id}.`) && !f.type.startsWith('tooldock.'))
+    .map((f) => ({ type: f.type, version: Number.isInteger(f.version) && f.version > 0 ? f.version : 1, title: f.title || f.type }));
+  if (!imports.length && !formats.length) return {};
+  return { exchange: { imports, formats } };
 }
 
 async function buildEntry(entry, prev, log) {

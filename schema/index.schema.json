@@ -34,7 +34,23 @@
               "displayName": { "type": "string" },
               "description": { "type": "string" },
               "icon": { "type": ["string", "null"], "description": "emoji，或由套件內圖示轉成的 data:image/... URI（32 KB 以內）" },
-              "size": { "type": "integer", "description": ".tbx 位元組數" }
+              "size": { "type": "integer", "description": ".tbx 位元組數" },
+              "exchange": {
+                "type": "object",
+                "description": "資料交換（ToolDock 1.4.0 起）：套件 contributes.exchange 的摘要，商店用來「到商店尋找」可接收某格式的擴充",
+                "properties": {
+                  "imports": { "type": "array", "items": { "type": "string" }, "description": "可接收的格式（imports[].type）" },
+                  "formats": {
+                    "type": "array",
+                    "description": "定義的格式",
+                    "items": {
+                      "type": "object",
+                      "required": ["type", "version", "title"],
+                      "properties": { "type": { "type": "string" }, "version": { "type": "integer", "minimum": 1 }, "title": { "type": "string" } }
+                    }
+                  }
+                }
+              }
             }
           }
         }
