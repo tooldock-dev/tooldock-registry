@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "oracle-sql",
+    "repo": "tooldock-dev/tooldock-ext-oracle-sql",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
+  }
+]
