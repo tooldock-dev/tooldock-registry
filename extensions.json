@@ -5,5 +5,12 @@
     "publisher": "ToolDock",
     "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
     "verified": true
+  },
+  {
+    "id": "telegram",
+    "repo": "tooldock-dev/tooldock-ext-telegram",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
   }
 ]
