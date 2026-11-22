@@ -19,5 +19,12 @@
     "publisher": "ToolDock",
     "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
     "verified": true
+  },
+  {
+    "id": "markdown-editor",
+    "repo": "tooldock-dev/tooldock-ext-markdown-editor",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
   }
 ]
