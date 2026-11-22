@@ -26,5 +26,12 @@
     "publisher": "ToolDock",
     "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
     "verified": true
+  },
+  {
+    "id": "git-tool",
+    "repo": "tooldock-dev/tooldock-ext-git",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
   }
 ]
