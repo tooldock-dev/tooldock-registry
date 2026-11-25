@@ -33,5 +33,26 @@
     "publisher": "ToolDock",
     "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
     "verified": true
+  },
+  {
+    "id": "data-converter",
+    "repo": "tooldock-dev/tooldock-ext-data-converter",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
+  },
+  {
+    "id": "site-monitor",
+    "repo": "tooldock-dev/tooldock-ext-site-monitor",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
+  },
+  {
+    "id": "table-report",
+    "repo": "tooldock-dev/tooldock-ext-table-report",
+    "publisher": "ToolDock",
+    "publicKey": "MCowBQYDK2VwAyEAmAJ3J9wvgYEhzrjo/jiyX/Ywpa8TARee15mXhVrMBPg=",
+    "verified": true
   }
 ]
