@@ -34,7 +34,7 @@ ToolDock 的擴充後端擁有完整的 Node.js 權限，平台**沒有沙箱**�
 
 - [ ] 「檢查上架 PR」job 通過：`extensions.json` 格式正確，`publicKey` 能載入為 Ed25519 公鑰。
 - [ ] job summary 中，新擴充有被收錄（表示已有附件齊全、SHA-256 與簽章驗證都通過的正式 Release）。
-- [ ] `id` 沒有與既有擴充、ToolDock 內建擴充（`data-converter`、`site-monitor`、`table-report`）或知名工具名稱混淆。
+- [ ] `id` 沒有與既有擴充、ToolDock 官方擴充（1.10.0 以前的內建擴充 `data-converter`、`site-monitor`、`table-report`）或知名工具名稱混淆。
 
 ### 身分
 
